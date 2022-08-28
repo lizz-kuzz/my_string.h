@@ -85,6 +85,37 @@ char *my_strncpy(char *s, char *ct, int n)
     // *s = '\0';
     return s_save; 
 }
-
+// TODO: разобраться с этим и понять 
 // // копирует не более n символов строки ct в s; возвращает s. Дополняет
 // // результат символами '\0', если символов в ct меньше n
+
+char *my_strcat(char *s, char *ct) 
+{
+    char *s_save = s;
+    int len_s = my_strlen(s);
+    s += len_s;
+    while (*ct != '\0')
+    {
+        *s = *ct;
+        s++; 
+        ct++;
+    }
+    return s_save; 
+}
+
+char *my_strncat(char *s, char *t, int n)
+{
+    char *s_save = s;
+    int len_s = my_strlen(s);
+    s += len_s;
+    for (int i = 0; i <= n; i++)
+    {
+        while (*t != '\0')
+        {
+            *s = *t;
+            s++;     
+            t++;
+        }
+    }
+    return s_save; 
+}

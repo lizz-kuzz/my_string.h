@@ -6,15 +6,11 @@ int main()
     char s[] = "Abbbsd";
     char s1[] = "Cacac";
 
-    //strncpy(s, s1, 2);
 
-    // printf("%s\n", strncpy(s, s1, 4));
-    // printf("%s\n", my_strncpy(s, s1, 4));
-    printf("%s\n", strncat(s, s1, 3));
-    printf("%s\n", my_strncat(s, s1, 3));
+    printf("%s\n", strncpy(s, s1, 6));
+    printf("%s\n", my_strncpy(s, s1, 6));
 
 
 }
 
-// копирует не более n символов строки ct в s; возвращает s. Дополняет
-// результат символами '\0', если символов в ct меньше n
+

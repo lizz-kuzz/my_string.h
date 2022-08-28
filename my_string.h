@@ -13,10 +13,8 @@ char *my_strchr(char *cs, char c);
 
 int my_strcmp(char *s, char *t);
 
-
 char *my_strcat(char *s, char *ct);
 
 char *my_strncat(char *s, char *t, int n);
-
 
 #endif

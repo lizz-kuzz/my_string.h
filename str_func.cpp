@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "my_string.h"
 
 int my_puts(const char *s)
@@ -81,8 +82,6 @@ char *my_strncpy(char *s, char *ct, int n)
         s++;
         ct++;
     }
-    
-    // *s = '\0';
     return s_save; 
 }
 
@@ -116,4 +115,53 @@ char *my_strncat(char *s, char *t, int n)
         }
     }
     return s_save; 
+}
+
+char *my_strdup(char *s)
+{
+    char *s_save;
+
+    s_save = (char *) malloc(my_strlen(s) + 1);
+
+    if (s_save != NULL)
+        s_save = my_strcpy(s_save, s);
+
+    return s_save;
+
+}
+
+char *my_fgets(char *s, int n, FILE *p)
+{
+    char *s_save = s;
+    int count = 0, c = 0;
+    while (count != n - 1)
+        {
+            c = getc(p);
+            *s = c;
+            count++;
+            s++;
+            c++;
+
+            if (*s == '\n' || *s == EOF)
+                return NULL;
+        } 
+    *s = '\0'; 
+    return s_save;
+}
+
+int my_getline(char s[], int lim)
+{
+    int c = 0;
+    int len = 0;
+    
+    c = getchar();
+    while (c != '\0' && len != lim - 1 && c != EOF)
+    {
+        s[len] = c;
+        len++;
+        if (c == '\n')
+            break;
+        c = getchar();
+    }
+    return len;
 }

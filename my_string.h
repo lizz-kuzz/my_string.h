@@ -17,4 +17,9 @@ char *my_strcat(char *s, char *ct);
 
 char *my_strncat(char *s, char *t, int n);
 
+char *my_fgets(char *, int, FILE *);
+
+int my_getline(char s[], int lim);
+
+char *my_strdup(char *s);
 #endif

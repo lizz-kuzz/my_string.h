@@ -7,15 +7,11 @@ int my_puts(const char *s)
     if (s == NULL)
         return EOF;
 
-    for (int i = 0; ; i++)
-    {
-        if (s[i] == '\0')
-        {
-            printf("\n"); 
-            return 1;
-        }
-        putchar(s[i++]); 
-    }
+    for (int i = 0; s[i] != '\0'; ++i) 
+        putchar(s[i++]);
+
+    printf("\n");
+    return 1;    
 }
 
 int my_strlen(char *s)
@@ -29,59 +25,39 @@ int my_strlen(char *s)
 
 int my_strcmp(char *s, char *t) 
 {
-    while (*t != '\0' && *s != '\0')
-    {
-        if (*s == *t)
-        {
-            t++;
-            s++;
-        }
-        else 
-            break;
-    }
-    return (*s - *t);
+    for (; (*t != '\0' && *s != '\0') && *s == *t; ++s, ++t) continue;
+
+    return *s - *t;
 }
 
 char *my_strchr(char *cs, char c)
 {
-    char *search_c = NULL;
-    while (*cs != '\0')
+    while (*cs++ != '\0')
     {
         if (*cs == c)
-        {
-            search_c = cs;
-            break;
-        }
-        else 
-            cs++;
+            return cs;
     }
-    return search_c;
+    return NULL;
 }
 
 char *my_strcpy(char *s, char *t) 
 {
     char *s_save = s;
-    while (*t != '\0')
-    {
-        *s = *t;
-        t++;
-        s++;
-    }
-    *s = '\0';
+    for (;(*s = *t) != '\0'; s++, t++) continue;
 
     return s_save; 
 }
 
 char *my_strncpy(char *s, char *ct, int n)
 {
-    char *s_save = s;
+    char *s_save = s; //занулить оставшиеся после н символов
+    int len = my_strlen(s) - n;
 
-    for (int i = 0; i < n && *ct != '\0'; i++)
-    {
+    for (; n > 0 && *ct != '\0'; n--, s++, ct++) 
         *s = *ct;
-        s++;
-        ct++;
-    }
+
+    for (; len > 0 && *s != '\0'; len--, s++)
+        *s = '\0';
     return s_save; 
 }
 
@@ -89,39 +65,30 @@ char *my_strncpy(char *s, char *ct, int n)
 char *my_strcat(char *s, char *ct) 
 {
     char *s_save = s;
-    int len_s = my_strlen(s);
-    s += len_s;
+
+    s +=  my_strlen(s);
+
     while (*ct != '\0')
-    {
-        *s = *ct;
-        s++; 
-        ct++;
-    }
+        *s++ = *ct++;
+
     return s_save; 
 }
 
 char *my_strncat(char *s, char *t, int n)
 {
     char *s_save = s;
-    int len_s = my_strlen(s);
-    s += len_s;
-    for (int i = 0; i <= n; i++)
-    {
-        while (*t != '\0')
-        {
-            *s = *t;
-            s++;     
-            t++;
-        }
-    }
+   
+    s += my_strlen(s);
+
+    for (int i = 0; i <= n && *t != '\0'; i++, s++, t++)
+        *s = *t;
+
     return s_save; 
 }
 
 char *my_strdup(char *s)
 {
-    char *s_save;
-
-    s_save = (char *) malloc(my_strlen(s) + 1);
+    char *s_save = (char *) malloc(my_strlen(s) + 1);
 
     if (s_save != NULL)
         s_save = my_strcpy(s_save, s);
@@ -133,14 +100,14 @@ char *my_strdup(char *s)
 char *my_fgets(char *s, int n, FILE *p)
 {
     char *s_save = s;
-    int count = 0, c = 0;
-    while (count != n - 1)
+    int count = 0;
+    n -= 1;
+
+    while (count != n)
         {
-            c = getc(p);
-            *s = c;
+            *s =(char) getc(p);
             count++;
             s++;
-            c++;
 
             if (*s == '\n' || *s == EOF)
                 return NULL;
@@ -149,19 +116,29 @@ char *my_fgets(char *s, int n, FILE *p)
     return s_save;
 }
 
+// int my_getline(char s[], int lim)
+// {
+//     int len = 0;
+//     for (len = 0; (s[len] = (char ) getchar())!= '\0' && (len != lim - 1) && s[len] != EOF; ++len) 
+//     {
+//         if (s[len] == '\n')
+//                 break;
+//     }
+//     s[len] = '\0';
+//     return len;
+// }
+
+
 int my_getline(char s[], int lim)
 {
     int c = 0;
     int len = 0;
     
-    c = getchar();
-    while (c != '\0' && len != lim - 1 && c != EOF)
+    for (len = 0; (c = getchar()) != '\0' && len != lim - 1 && c != EOF; len++)
     {
-        s[len] = c;
-        len++;
+        s[len] = (char) c;
         if (c == '\n')
             break;
-        c = getchar();
     }
     return len;
 }

@@ -116,19 +116,6 @@ char *my_fgets(char *s, int n, FILE *p)
     return s_save;
 }
 
-// int my_getline(char s[], int lim)
-// {
-//     int len = 0;
-//     for (len = 0; (s[len] = (char ) getchar())!= '\0' && (len != lim - 1) && s[len] != EOF; ++len) 
-//     {
-//         if (s[len] == '\n')
-//                 break;
-//     }
-//     s[len] = '\0';
-//     return len;
-// }
-
-
 int my_getline(char s[], int lim)
 {
     int c = 0;

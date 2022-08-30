@@ -80,7 +80,7 @@ char *my_strncat(char *s, char *t, int n)
    
     s += my_strlen(s);
 
-    for (int i = 0; i <= n && *t != '\0'; i++, s++, t++)
+    for (; n > 0 && *t != '\0'; n--, s++, t++)
         *s = *t;
 
     return s_save; 
@@ -88,13 +88,11 @@ char *my_strncat(char *s, char *t, int n)
 
 char *my_strdup(char *s)
 {
-    char *s_save = (char *) malloc(my_strlen(s) + 1);
-
+    char *s_save = (char *) malloc(my_strlen(s) + 1); // сalloc
     if (s_save != NULL)
         s_save = my_strcpy(s_save, s);
 
     return s_save;
-
 }
 
 char *my_fgets(char *s, int n, FILE *p)
@@ -120,8 +118,9 @@ int my_getline(char s[], int lim)
 {
     int c = 0;
     int len = 0;
-    
-    for (len = 0; (c = getchar()) != '\0' && len != lim - 1 && c != EOF; len++)
+    lim -= 1;
+
+    for (len = 0; (c = getchar()) != '\0' && len != lim && c != EOF; len++)
     {
         s[len] = (char) c;
         if (c == '\n')
